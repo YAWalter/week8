@@ -4,6 +4,8 @@
 include 'debug.php'; 	// comment out when done!
 include 'autoload.php';
 
+include 'dbVars.php';
+
 // # INSTANTIATE PROGRAM OBJECT
 $obj = new main();
 
@@ -25,46 +27,9 @@ class main {
 
 // ## OTHER CLASSES GO HERE
 //    try to keep everything in alpha order, eh?
-	
-// db connection vars ----------------- //
-define('DATABASE', 'yw674');			//
-define('USERNAME', 'yw674');			//
-define('PASSWORD', 'HEurGiFfp');		//
-define('CONNECTION', 'sql2.njit.edu');	//
-// ------------------------------------ //
 
-abstract class collection {
-    static public function create() {
-      $model = new static::$modelName;
-      return $model;
-    }
-    
-	static public function findAll() {
-        $db = dbConn::getConnection();
-        $tableName = get_called_class();
-        $sql = 'SELECT * FROM ' . $tableName;
-        $statement = $db->prepare($sql);
-        $statement->execute();
-        $class = static::$modelName;
-        $statement->setFetchMode(PDO::FETCH_CLASS, $class);
-        $recordsSet =  $statement->fetchAll();
-        return $recordsSet;
-    }
-    
-	static public function findOne($id) {
-        $db = dbConn::getConnection();
-        $tableName = get_called_class();
-        $sql = 'SELECT * FROM ' . $tableName . ' WHERE id =' . $id;
-        $statement = $db->prepare($sql);
-        $statement->execute();
-        $class = static::$modelName;
-        $statement->setFetchMode(PDO::FETCH_CLASS, $class);
-        $recordsSet =  $statement->fetchAll();
-        return $recordsSet[0];
-    }
-}
-
-// class table extends collection { protected static $modelname = 'table'; }
+// ## COLLECTIONS (all that's needed is the below templtate)
+//    class table extends collection { protected static $modelname = 'table'; }
 class accounts extends collection {
     protected static $modelName = 'account';
 }
@@ -72,43 +37,8 @@ class todos extends collection {
     protected static $modelName = 'todo';
 }
 
-abstract class model {
-    protected $tableName;
-    public function save()
-    {
-        if ($this->id = '') {
-            $sql = $this->insert();
-        } else {
-            $sql = $this->update();
-        }
-        $db = dbConn::getConnection();
-        $statement = $db->prepare($sql);
-        $statement->execute();
-        $tableName = get_called_class();
-        $array = get_object_vars($this);
-        $columnString = implode(',', $array);
-        $valueString = ":".implode(',:', $array);
-       // echo "INSERT INTO $tableName (" . $columnString . ") VALUES (" . $valueString . ")</br>";
-        echo 'I just saved record: ' . $this->id;
-    }
-	
-    private function insert() {
-        $sql = 'sometthing';
-        return $sql;
-    }
-	
-    private function update() {
-        $sql = 'sometthing';
-        return $sql;
-        echo 'I just updated record' . $this->id;
-    }
-	
-    public function delete() {
-        echo 'I just deleted record' . $this->id;
-    }
-}
-
-// class table extends model { public $column; }
+// ## MODELS (add the __construct()er, too, to build $this->tableName)
+//    class table extends model { public $column; }
 class account extends model {
 }
 
@@ -144,6 +74,8 @@ $record = new todo();
 $record->message = 'some task';
 $record->isdone = 0;
 //$record->save();
+
+// sample output:
 print_r($record);
 echo '<br>';
 $record = todos::create();
