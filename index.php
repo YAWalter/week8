@@ -25,37 +25,11 @@ class main {
 	}
 }
 
-// ## OTHER CLASSES GO HERE
-//    try to keep everything in alpha order, eh?
+// ## NO OTHER CLASSES SHOULD REMAIN HERE
 
-// ## COLLECTIONS (all that's needed is the below templtate)
-//    class table extends collection { protected static $modelname = 'table'; }
-class accounts extends collection {
-    protected static $modelName = 'account';
-}
-class todos extends collection {
-    protected static $modelName = 'todo';
-}
+// ## COLLECTIONS:	class table extends collection { protected static $modelname = 'table'; }
+// ## MODELS: 		class table extends model { public $column; } plus a __construct()er, where $this->tableName = 'tableName';
 
-// ## MODELS (add the __construct()er, too, to build $this->tableName)
-//    class table extends model { public $column; }
-class account extends model {
-}
-
-class todo extends model {
-    public $id;
-    public $owneremail;
-    public $ownerid;
-    public $createddate;
-    public $duedate;
-    public $message;
-    public $isdone;
-    public function __construct()
-    {
-        $this->tableName = 'todos';
-	
-    }
-}
 
 // this would be the method to put in the index page for accounts
 $records = accounts::findAll();
