@@ -13,7 +13,7 @@ class main {
 	
 	public function __construct() {
 		// variables:
-		foo::bar($foobar);
+		// foo::bar($foobar);
 		// begin building output 
 		
 	}
@@ -26,39 +26,14 @@ class main {
 // ## OTHER CLASSES GO HERE
 //    try to keep everything in alpha order, eh?
 	
-define('DATABASE', 'yw674');
-define('USERNAME', 'yw674');
-define('PASSWORD', 'HEurGiFfp');
-define('CONNECTION', 'sql2.njit.edu');
+// db connection vars ----------------- //
+define('DATABASE', 'yw674');			//
+define('USERNAME', 'yw674');			//
+define('PASSWORD', 'HEurGiFfp');		//
+define('CONNECTION', 'sql2.njit.edu');	//
+// ------------------------------------ //
 
-class dbConn{
-    //variable to hold connection object.
-    protected static $db;
-    //private construct - class cannot be instatiated externally.
-    private function __construct() {
-        try {
-            // assign PDO object to db variable
-            self::$db = new PDO( 'mysql:host=' . CONNECTION .';dbname=' . DATABASE, USERNAME, PASSWORD );
-            self::$db->setAttribute( PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION );
-        }
-        catch (PDOException $e) {
-            //Output error - would normally log this to error file rather than output to user.
-            echo "Connection Error: " . $e->getMessage();
-        }
-    }
-	
-    // get connection function. Static method - accessible without instantiation
-    public static function getConnection() {
-        //Guarantees single instance, if no connection object exists then create one.
-        if (!self::$db) {
-            //new connection object.
-            new dbConn();
-        }
-        //return connection.
-        return self::$db;
-    }
-}
-class collection {
+abstract class collection {
     static public function create() {
       $model = new static::$modelName;
       return $model;
@@ -97,7 +72,7 @@ class todos extends collection {
     protected static $modelName = 'todo';
 }
 
-class model {
+abstract class model {
     protected $tableName;
     public function save()
     {
@@ -170,6 +145,7 @@ $record->message = 'some task';
 $record->isdone = 0;
 //$record->save();
 print_r($record);
+echo '<br>';
 $record = todos::create();
 print_r($record);
 
