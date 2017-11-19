@@ -58,18 +58,9 @@ $record->isdone = 0;
 //$record->save();
 
 echo htmlTags::heading('R');
+// link? to accounts
+// link? to todos
 
-// this would be the method to put in the index page for accounts
-$records = accounts::findAll();
-echo htmlTags::heading('Find all accounts');
-print_r($records);
-echo htmlTags::lineBreak() . htmlTags::lineBreak();
-
-// this would be the method to put in the index page for todos
-$records = todos::findAll();
-echo htmlTags::heading('Find all todos');
-print_r($records);
-echo htmlTags::lineBreak() . htmlTags::lineBreak();
 
 //this code is used to get one record and is used for showing one record or updating one record
 $record = todos::findOne(1);
@@ -77,16 +68,14 @@ echo htmlTags::heading('Find one todo');
 print_r($record);
 echo htmlTags::lineBreak() . htmlTags::lineBreak();
 
-$record = accounts::findOne(1);
-echo htmlTags::heading('Find one account');
-print_r($record);
-echo htmlTags::lineBreak() . htmlTags::lineBreak();
-// copy to an accounts version
 
-echo 'sample output:' . htmltags::lineBreak();
-print_r($record);
-echo htmltags::lineBreak();
+
+// SAMPLES - REMOVE
+echo htmlTags::lineBreak();
+echo htmlTags::pre('SAMPLE OUTPUT:');
+echo htmlTags::preObj($record);
+
 $record = todos::create();
-print_r($record);
+echo htmlTags::preObj($record);
 
 ?>

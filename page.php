@@ -53,21 +53,25 @@ class homepage extends page {
 	}
 }
 
-// index.php?page=CSVdisplay
-class CSVdisplay extends page {
+// index.php?page=read
+class read extends page {
 	public function get() {
-		$file = pageBuild::filepath();
+		// get table
+		$table = pageBuild::getParam('table');
+		$id = pageBuild::getParam('id');
 		
-		// if there's a file, parse it
-		$csv = ($file['name'] != NULL) ? 
-			parser::fileToCsv($file['path']) :
-			array();
-		// debug
-		// $this->html .= htmlTags::pre(print_r($csv, true));
+		// if no $id specified, findAll();
+		if ($id == NULL) {
+			echo htmlTags::heading('Find all ' . $table . ':');
+			$records = $table::findAll();
+		} else {
+			echo htmlTags::heading('Find id '. $id . ' from ' . $table . ':');
+			$records = $table::findOne($id);
+		}		
 		
-		$this->html .= pageBuild::filename($file['name']);
-		$this->html .= htmlTable::tableBuild($csv);
+		echo htmlTags::preObj($records);
 	}
+
 }
 
 ?>

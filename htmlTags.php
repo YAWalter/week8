@@ -2,6 +2,7 @@
 
 class htmlTags {	
 
+	// ## SIMPLE ONES: <title>, <h1>, <br>, <pre>
 	public static function makeTitle($str) {			
 		return '<title>' . $str . '</title>';
 	}
@@ -18,6 +19,12 @@ class htmlTags {
 		return '<pre>' . $str . '</pre>';
 	}
 	
+	// like the above, but for arrays/objects
+	public static function preObj($obj) {
+		return htmlTags::pre(print_r($obj, true));
+	}
+	
+	// ## listMaker: <ol> & <ul>
 	public static function listMaker($arr, $ordered) {
 		$list = htmlTags::listMaker($ordered, 0);
 		foreach ($arr as $item) {
@@ -28,7 +35,7 @@ class htmlTags {
 		return $list;
 	}
 	
-	public static function listTag($ordered, $close) {
+	private static function listTag($ordered, $close) {
 		if ($ordered) {
 			$type = 'ol';
 		} else {
@@ -42,7 +49,7 @@ class htmlTags {
 		return '<' . $close . $type . '>';
 	}
 	
-	// class for building forms
+	// ## form builder
 	public static function formBuild($title = NULL) {
 		$title = $title?:pageBuild::getName(true);
 		$form  = '';//htmlTags::heading($title);

@@ -16,48 +16,26 @@ class pageBuild extends page {
 		return $head; 
 	}
 
+	public static function getParam($param) {
+		if(isset($_REQUEST[$param]))
+			$value = $_REQUEST[$param];
+		else
+			$value = NULL;
+		
+		return $value;
+	}
+	
 	public static function getName($upper = NULL) {
-		$page = 'homepage';
-		if(isset($_REQUEST['page']))
-			$page = $_REQUEST['page'];
+		$page = pageBuild::getParam('page') ? 
+				pageBuild::getParam('page') : 
+				'homepage';
 		
 		$page_case = $upper?ucwords($page):strtolower($page);
 		
 		return $page_case;
 	}
 	
-	public static function getFile() {
-		$file = NULL;
-		if(isset($_REQUEST['file'])) {
-			$file = $_REQUEST['file'];
-		}
-		
-		return $file;
-	}
-	
-	public static function filename($name) {
-		if ($name) {
-			$output = htmlTags::heading('File: ' . $name);
-		} else {
-			$output = htmlTags::heading('<i>No File</i>');
-		}
-		
-		return $output;
-	}
-	
-	public static function filepath() {
-		$upload = 'uploads/';
-		$name = pageBuild::getFile();
-		$path = $upload . $name;
-		$filedata = array(
-			'upload'=>$upload, 
-			'name'  =>$name, 
-			'path'  =>$path
-		);
-		
-		return $filedata;
-	}
-	
+	//is this necessary?
 	public static function redirect($page, $file) {
 		return 'Location: index.php?page=' . $page . '&file=' . $file;
 	}
