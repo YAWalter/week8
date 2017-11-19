@@ -27,27 +27,38 @@ class main {
 
 // ## NO OTHER CLASSES SHOULD REMAIN HERE
 
-// ## COLLECTIONS:	class table extends collection { protected static $modelname = 'table'; }
-// ## MODELS: 		class table extends model { public $column; } plus a __construct()er, where $this->tableName = 'tableName';
+// ## COLLECTIONS.php:	class table extends collection { protected static $modelname = 'table'; }
+// ## MODELS.php: 		class table extends model { public $column; } plus a __construct()er, where $this->tableName = 'tableName';
+
+
+
+/*
+TODOS:
+-page chooser (params: table, operation, id)
+*/
 
 
 // this would be the method to put in the index page for accounts
 $records = accounts::findAll();
-echo 'Find all accounts' . htmlTags::lineBreak();
+echo htmlTags::heading('Find all accounts');
 print_r($records);
-echo htmlTags::lineBreak;
+echo htmlTags::lineBreak();
+echo htmlTags::lineBreak();
 
 // this would be the method to put in the index page for todos
 $records = todos::findAll();
-echo 'Find all accounts' . htmlTags::lineBreak();
+echo htmlTags::heading('Find all todos');
 print_r($records);
-echo htmlTags::lineBreak;
+echo htmlTags::lineBreak();
+echo htmlTags::lineBreak();
 
 //this code is used to get one record and is used for showing one record or updating one record
 $record = todos::findOne(1);
-echo 'Find one todo' . htmlTags::lineBreak();
+echo htmlTags::heading('Find one todo');
 print_r($record);
-echo htmlTags::lineBreak;
+echo htmlTags::lineBreak();
+echo htmlTags::lineBreak();
+// copy to an accounts version
 
 //this is used to save the record or update it (if you know how to make update work and insert)
 // $record->save();

@@ -21,14 +21,14 @@ abstract class model {
     }
 	
     private function insert() {
-        $sql = 'INSERT INTO ' . $tableName . ' (' . $columnString . ') VALUES (' . $valueString. ')';
+        $sql = 'INSERT INTO ' . $tableName . 
+			' (' . $columnString . ') VALUES (' . $valueString. ')';
         
 	   echo $sql . htmlTags::lineBreak;
 	   return $sql;
     }
 	
     private function update() {
-	    // this may need fixing
         $sql = 'UPDATE ' . $tableName .
 			'SET ' . $columnString . '=' . $valueString .
 			'WHERE id=' . $this->id;
