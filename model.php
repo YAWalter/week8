@@ -16,23 +16,34 @@ abstract class model {
         $array = get_object_vars($this);
         $columnString = implode(',', $array);
         $valueString = ":".implode(',:', $array);
-       // echo "INSERT INTO $tableName (" . $columnString . ") VALUES (" . $valueString . ")</br>";
+       
         echo 'I just saved record: ' . $this->id;
     }
 	
     private function insert() {
-        $sql = 'sometthing';
-        return $sql;
+        $sql = 'INSERT INTO ' . $tableName . ' (' . $columnString . ') VALUES (' . $valueString. ')';
+        
+	   echo $sql . htmlTags::lineBreak;
+	   return $sql;
     }
 	
     private function update() {
-        $sql = 'sometthing';
-        return $sql;
+	    // this may need fixing
+        $sql = 'UPDATE ' . $tableName .
+			'SET ' . $columnString . '=' . $valueString .
+			'WHERE id=' . $this->id;
+	   
+        echo $sql . htmlTags::lineBreak;
         echo 'I just updated record' . $this->id;
+	   return $sql;
     }
 	
     public function delete() {
+	   $sql = 'DELETE FROM ' . $tablename . ' WHERE id=' . $this->id;
+	   
+	   echo $sql . htmlTags::lineBreak;
         echo 'I just deleted record' . $this->id;
+	   return $sql;
     }
 }
 
