@@ -41,6 +41,22 @@ class htmlTags {
 		
 		return '<' . $close . $type . '>';
 	}
+	
+	// class for building forms
+	public static function formBuild($title = NULL) {
+		$title = $title?:pageBuild::getName(true);
+		$form  = '';//htmlTags::heading($title);
+		
+		$form .= '<form action="index.php?page=homepage" method="post" enctype="multipart/form-data">';
+		
+		// NEED TO BUILD URL: "index.php?page=" . pageBuild::getName() 
+		
+		$form .= '<input type="file" name="fileToUpload" id="fileToUpload">';
+		$form .= '<input type="submit" value="Upload CSV" name="submit">';
+		$form .= '</form> ';
+		
+		return $form;
+	}
 
 }
 ?>
