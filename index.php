@@ -33,13 +33,22 @@ class main {
 
 // this would be the method to put in the index page for accounts
 $records = accounts::findAll();
-//print_r($records);
+echo 'Find all accounts' . htmlTags::lineBreak();
+print_r($records);
+echo htmlTags::lineBreak;
+
 // this would be the method to put in the index page for todos
 $records = todos::findAll();
-//print_r($records);
+echo 'Find all accounts' . htmlTags::lineBreak();
+print_r($records);
+echo htmlTags::lineBreak;
+
 //this code is used to get one record and is used for showing one record or updating one record
 $record = todos::findOne(1);
-//print_r($record);
+echo 'Find one todo' . htmlTags::lineBreak();
+print_r($record);
+echo htmlTags::lineBreak;
+
 //this is used to save the record or update it (if you know how to make update work and insert)
 // $record->save();
 //$record = accounts::findOne(1);
