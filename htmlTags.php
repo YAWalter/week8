@@ -49,20 +49,74 @@ class htmlTags {
 		return '<' . $close . $type . '>';
 	}
 	
-	// ## form builder
-	public static function formBuild($title = NULL) {
-		$title = $title?:pageBuild::getName(true);
-		$form  = '';//htmlTags::heading($title);
+	// ## form builder (str Title, str PageName)
+	public static function formBuild($table, $operation) {
 		
-		$form .= '<form action="index.php?page=homepage" method="post" enctype="multipart/form-data">';
+		$form  = htmlTags::heading(ucwords($table));
 		
-		// NEED TO BUILD URL: "index.php?page=" . pageBuild::getName() 
+		$form .= '<form action="index.php?';
+		$form .= 'page=' . $operation . '&table=' . $table;
+		$form .= '" method="post" enctype="multipart/form-data">';
 		
-		$form .= '<input type="file" name="fileToUpload" id="fileToUpload">';
-		$form .= '<input type="submit" value="Upload CSV" name="submit">';
+		$form .= ($table == 'accounts') ?
+			htmlTags::accountFormInputs() :
+			htmlTags::todoFormInputs();
+		
+		$form .= '<input type="submit" value="'. $operation .
+				'" name="submit">';
 		$form .= '</form> ';
 		
 		return $form;
+	}
+	
+	public static function formInput($name, $type = 'text') {
+		$val = isset($this) ?
+			$this->$name :
+			NULL;
+		
+		$input = '<input type="' . $type . '" ' .
+					 'name="' . $name . '" ' .
+					 'id="'   . $name . '" ' . 
+					 'value="'. $val  . '">';
+		
+		return $input;
+	}
+	
+	public static function accountFormInputs() {
+		// all 'account' form inputs
+		$inputs  = 'EMAIL: ' . htmlTags::formInput('email') . 
+			htmlTags::lineBreak();
+		$inputs .= 'FIRST NAME: ' . htmlTags::formInput('fname') .
+			htmlTags::lineBreak();
+		$inputs .= 'LAST NAME: ' . htmlTags::formInput('lname') .
+			htmlTags::lineBreak();
+		$inputs .= 'PHONE: ' . htmlTags::formInput('phone') . 
+			htmlTags::lineBreak();
+		$inputs .= 'BIRTHDAY: ' . htmlTags::formInput('birthday', 'date')
+			. htmlTags::lineBreak();
+		$inputs .= 'GENDER: ' . htmlTags::formInput('gender') .
+			htmlTags::lineBreak();
+		$inputs .= 'PASSWORD: ' . htmlTags::formInput('password') . 
+			htmlTags::lineBreak();
+		
+		return $inputs;
+	}
+	
+	public static function todoFormInputs() {
+		// all 'todo' form inputs
+		$inputs  = 'OWNER EMAIL: ' . htmlTags::formInput('owneremail') 
+			. htmlTags::lineBreak();
+		$inputs .= 'OWNER ID: ' . htmlTags::formInput('ownerid') .
+			htmlTags::lineBreak();
+		$inputs .= 'CREATED DATE: ' . htmlTags::formInput('createddate', 'date') . htmlTags::lineBreak();
+		$inputs .= 'DUE DATE: ' . htmlTags::formInput('duedate', 'date') 
+			. htmlTags::lineBreak();
+		$inputs .= 'MESSAGE: ' . htmlTags::formInput('message') .
+			htmlTags::lineBreak();
+		$inputs .= 'IS DONE: ' . htmlTags::formInput('isdone') . 
+			htmlTags::lineBreak();
+		
+		return $inputs;
 	}
 
 }

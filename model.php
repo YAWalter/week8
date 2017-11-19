@@ -4,27 +4,39 @@ abstract class model {
     protected $tableName;
     public function save()
     {
-        if ($this->id = '') {
-            $sql = $this->insert();
+        $tableName = get_called_class();
+        $array = get_object_vars($this);
+	   
+	   $columns = array_flip($array);
+	   array_pop($columns);
+        $columnString = implode(',', $columns);
+        
+	   $values = array_slice($array, 1);
+	   array_pop($values);
+	   $valueString = implode(',', $values);
+	   
+	   echo htmlTags::preObj($this);
+	   echo $tableName . 'CHECK' . htmlTags::lineBreak();
+	   echo $columnString . htmlTags::lineBreak();
+	   echo $valueString . htmlTags::lineBreak() . htmlTags::lineBreak();
+	   
+        if ($this->id == '') {
+            $sql = $this->insert($tableName, $columnString, $valueString);
         } else {
             $sql = $this->update();
         }
         $db = dbConn::getConnection();
         $statement = $db->prepare($sql);
         $statement->execute();
-        $tableName = get_called_class();
-        $array = get_object_vars($this);
-        $columnString = implode(',', $array);
-        $valueString = ":".implode(',:', $array);
        
         echo 'I just saved record: ' . $this->id;
     }
 	
-    private function insert() {
+    private function insert($tableName, $columnString, $valueString) {
         $sql = 'INSERT INTO ' . $tableName . 
-			' (' . $columnString . ') VALUES (' . $valueString. ')';
+			's (' . $columnString . ') VALUES (' . $valueString. ')';
         
-	   echo $sql . htmlTags::lineBreak;
+	   echo $sql . htmlTags::lineBreak();
 	   return $sql;
     }
 	

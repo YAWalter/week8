@@ -41,41 +41,13 @@ class main {
 
 /*
 TODOS:
--page chooser (params: table, operation, id)
+-page chooser (params: operation, table[, id])
+-CREATE	(...done?)
+-READ	(needs formatting and get/post methods)
+-UPDATE
+-DELETE
 */
 
-
-//this is used to save the record or update it (if you know how to make update work and insert)
-
-echo htmlTags::heading('C');
-
-// $record->save();
-//$record = accounts::findOne(1);
-//This is how you would save a new todo item
-$record = new todo();
-$record->message = 'some task';
-$record->isdone = 0;
-//$record->save();
-
-echo htmlTags::heading('R');
-// link? to accounts
-// link? to todos
-
-
-//this code is used to get one record and is used for showing one record or updating one record
-$record = todos::findOne(1);
-echo htmlTags::heading('Find one todo');
-print_r($record);
-echo htmlTags::lineBreak() . htmlTags::lineBreak();
-
-
-
-// SAMPLES - REMOVE
-echo htmlTags::lineBreak();
-echo htmlTags::pre('SAMPLE OUTPUT:');
-echo htmlTags::preObj($record);
-
-$record = todos::create();
-echo htmlTags::preObj($record);
+echo '<hr>';
 
 ?>
