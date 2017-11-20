@@ -57,10 +57,13 @@ class htmlTags {
 	// ## form builder (str Title, str PageName)
 	public static function formBuild($table, $operation, $data = NULL) {
 		
+		$id = pageBuild::getParam('id');
 		$form  = htmlTags::heading(ucwords($table));
 		
 		$form .= '<form action="index.php?';
 		$form .= 'page=' . $operation . '&table=' . $table;
+		if ($id != NULL)
+			$form .= '&id=' . $id;
 		$form .= '" method="post" enctype="multipart/form-data">';
 		
 		$form .= ($table == 'accounts') ?
@@ -74,11 +77,8 @@ class htmlTags {
 		return $form;
 	}
 	
-	public static function formInput($name, $data = NULL, $type = 'text') {
-		$val = isset($data) ?
-			$data->$name :
-			NULL;
-		echo '--- ' . $val . ' ---' . htmlTags::lineBreak();
+	public static function formInput($name, $val = NULL, $type = 'text') {
+		// echo '--- ' . $val . ' ---' . htmlTags::lineBreak();
 		
 		$input = '<input type="' . $type . '" ' .
 					 'name="' . $name . '" ' .
@@ -90,19 +90,26 @@ class htmlTags {
 	
 	public static function accountFormInputs($data) {
 		// all 'account' form inputs
-		$inputs  = 'EMAIL: ' . htmlTags::formInput('email', $data) . 
+		$inputs  = 'EMAIL: ' . 
+			htmlTags::formInput('email', $data->email) . 
 			htmlTags::lineBreak();
-		$inputs .= 'FIRST NAME: ' . htmlTags::formInput('fname') .
+		$inputs .= 'FIRST NAME: ' . 
+			htmlTags::formInput('fname', $data->fname) . 
 			htmlTags::lineBreak();
-		$inputs .= 'LAST NAME: ' . htmlTags::formInput('lname') .
+		$inputs .= 'LAST NAME: ' . 
+			htmlTags::formInput('lname', $data->lname) .
 			htmlTags::lineBreak();
-		$inputs .= 'PHONE: ' . htmlTags::formInput('phone') . 
+		$inputs .= 'PHONE: ' . 
+			htmlTags::formInput('phone', $data->phone) . 
 			htmlTags::lineBreak();
-		$inputs .= 'BIRTHDAY: ' . htmlTags::formInput('birthday', $data, 'date')
-			. htmlTags::lineBreak();
-		$inputs .= 'GENDER: ' . htmlTags::formInput('gender') .
+		$inputs .= 'BIRTHDAY: ' . 
+			htmlTags::formInput('birthday', $data->birthday, 'date') .
 			htmlTags::lineBreak();
-		$inputs .= 'PASSWORD: ' . htmlTags::formInput('password') . 
+		$inputs .= 'GENDER: ' . 
+			htmlTags::formInput('gender', $data->gender) .
+			htmlTags::lineBreak();
+		$inputs .= 'PASSWORD: ' . 
+			htmlTags::formInput('password', $data->password) . 
 			htmlTags::lineBreak();
 		
 		return $inputs;
