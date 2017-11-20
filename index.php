@@ -43,7 +43,7 @@ class main {
 TODOS:
 -page chooser (params: operation, table[, id])
 -CREATE	(...done?)
--READ	(needs formatting and get/post methods)
+-READ	(needs formatting)
 -UPDATE
 -DELETE
 */

@@ -2,7 +2,7 @@
 
 class htmlTags {	
 
-	// ## SIMPLE ONES: <title>, <h1>, <br>, <pre>
+	// ## SIMPLE ONES: <title>, <h1>, <a>, <br>, <pre>
 	public static function makeTitle($str) {			
 		return '<title>' . $str . '</title>';
 	}
@@ -11,6 +11,11 @@ class htmlTags {
 		return '<h1>' . $str . '</h1>';
 	}
 
+	public static function href($link, $str = NULL) {
+		$text = ($str == NULL) ? $link : $str;
+		return '<a href=' . $link . '>' . $text . '</a>';
+	}
+	
 	public static function lineBreak() {
 			return '<br>';
 	}
@@ -50,7 +55,7 @@ class htmlTags {
 	}
 	
 	// ## form builder (str Title, str PageName)
-	public static function formBuild($table, $operation) {
+	public static function formBuild($table, $operation, $data = NULL) {
 		
 		$form  = htmlTags::heading(ucwords($table));
 		
@@ -59,8 +64,8 @@ class htmlTags {
 		$form .= '" method="post" enctype="multipart/form-data">';
 		
 		$form .= ($table == 'accounts') ?
-			htmlTags::accountFormInputs() :
-			htmlTags::todoFormInputs();
+			htmlTags::accountFormInputs($data) :
+			htmlTags::todoFormInputs($data);
 		
 		$form .= '<input type="submit" value="'. $operation .
 				'" name="submit">';
@@ -69,10 +74,11 @@ class htmlTags {
 		return $form;
 	}
 	
-	public static function formInput($name, $type = 'text') {
-		$val = isset($this) ?
-			$this->$name :
+	public static function formInput($name, $data = NULL, $type = 'text') {
+		$val = isset($data) ?
+			$data->$name :
 			NULL;
+		echo '--- ' . $val . ' ---' . htmlTags::lineBreak();
 		
 		$input = '<input type="' . $type . '" ' .
 					 'name="' . $name . '" ' .
@@ -82,9 +88,9 @@ class htmlTags {
 		return $input;
 	}
 	
-	public static function accountFormInputs() {
+	public static function accountFormInputs($data) {
 		// all 'account' form inputs
-		$inputs  = 'EMAIL: ' . htmlTags::formInput('email') . 
+		$inputs  = 'EMAIL: ' . htmlTags::formInput('email', $data) . 
 			htmlTags::lineBreak();
 		$inputs .= 'FIRST NAME: ' . htmlTags::formInput('fname') .
 			htmlTags::lineBreak();
@@ -92,7 +98,7 @@ class htmlTags {
 			htmlTags::lineBreak();
 		$inputs .= 'PHONE: ' . htmlTags::formInput('phone') . 
 			htmlTags::lineBreak();
-		$inputs .= 'BIRTHDAY: ' . htmlTags::formInput('birthday', 'date')
+		$inputs .= 'BIRTHDAY: ' . htmlTags::formInput('birthday', $data, 'date')
 			. htmlTags::lineBreak();
 		$inputs .= 'GENDER: ' . htmlTags::formInput('gender') .
 			htmlTags::lineBreak();
@@ -109,7 +115,7 @@ class htmlTags {
 		$inputs .= 'OWNER ID: ' . htmlTags::formInput('ownerid') .
 			htmlTags::lineBreak();
 		$inputs .= 'CREATED DATE: ' . htmlTags::formInput('createddate', 'date') . htmlTags::lineBreak();
-		$inputs .= 'DUE DATE: ' . htmlTags::formInput('duedate', 'date') 
+		$inputs .= 'DUE DATE: ' . htmlTags::formInput('duedate', $data, 'date') 
 			. htmlTags::lineBreak();
 		$inputs .= 'MESSAGE: ' . htmlTags::formInput('message') .
 			htmlTags::lineBreak();

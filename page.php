@@ -87,6 +87,11 @@ class read extends page {
 		
 		$this->html .= htmlTags::preObj($records);
 	}
+	
+	// is this where Updates land?
+	public function post() {
+		echo '';
+	}
 }
 
 // index.php?page=update
@@ -96,16 +101,19 @@ class update extends page {
 		$table = pageBuild::getParam('table');
 		$id = pageBuild::getParam('id');
 		
-		// if no $id specified, findAll();
+		// if no $id specified, go home
 		if ($id == NULL) {
-			echo htmlTags::heading('Find all ' . $table . ':');
-			$records = $table::findAll();
+			header(pageBuild::redirect());
 		} else {
-			echo htmlTags::heading('Find id '. $id . ' from ' . $table . ':');
-			$records = $table::findOne($id);
+			// find the record
+			$record = $table::findOne($id);
+			$this->html .= htmlTags::heading('Find id '. $id . ' from ' . $table . ':');
+			
+			// build the form (with preload data)
+			$this->html .= htmlTags::formBuild($table, get_class(), $record);
 		}		
 		
-		echo htmlTags::preObj($records);
+		$this->html .= htmlTags::preObj($record);
 	}
 
 	public function post() {

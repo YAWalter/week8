@@ -36,8 +36,8 @@ class pageBuild extends page {
 	}
 	
 	//is this necessary?
-	public static function redirect($page, $file) {
-		return 'Location: index.php?page=' . $page . '&file=' . $file;
+	public static function redirect($page = 'homepage') {
+		return 'Location: index.php?page=' . $page;
 	}
 	
 	public static function pageEnder() {
