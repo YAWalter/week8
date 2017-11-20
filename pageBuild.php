@@ -11,7 +11,19 @@ class pageBuild extends page {
 		$head .= '<link rel ="stylesheet" href="styles.css">';
 		$head .= htmlTags::makeTitle($name);
 		$head .= '</head><body>';
-		$head .= htmlTags::heading($name);
+		// make useful links
+		$link = 'index.php?page=read&table=' . 
+			pageBuild::getParam('table');
+		
+		$head .= htmlTags::href($link, htmlTags::heading($name)) .
+			htmlTags::lineBreak();
+		$head .= 'Params:' . htmlTags::lineBreak();
+		$head .= 'page = [create, read, update, remove]' . 
+			htmlTags::lineBreak();
+		$head .= 'table = [accounts, todos]' . 
+			htmlTags::lineBreak();
+		$head .= 'optional id' . 
+			htmlTags::lineBreak();
 		
 		return $head; 
 	}

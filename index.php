@@ -1,7 +1,7 @@
 <?php
 
 // # DEBUGGING & AUTOLOADER
-include 'debug.php'; 	// comment out when done!
+//include 'debug.php'; 	// comment out when done!
 include 'autoload.php';
 
 include 'dbVars.php';

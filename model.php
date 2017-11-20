@@ -63,7 +63,7 @@ abstract class model {
 			' WHERE id=' . $this->id;
 	   
         echo $sql . htmlTags::lineBreak();
-        echo 'I just updated record' . $this->id;
+        echo 'I just updated record ' . $this->id;
 	   return $sql;
     }
 	
@@ -76,7 +76,7 @@ abstract class model {
         $statement->execute();
 	   
 	   echo $sql . htmlTags::lineBreak();
-        echo 'I just deleted record' . $this->id;
+        echo 'I just deleted record ' . $this->id;
     }
 }
 

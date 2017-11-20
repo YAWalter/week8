@@ -13,6 +13,7 @@ class htmlTags {
 
 	public static function href($link, $str = NULL) {
 		$text = ($str == NULL) ? $link : $str;
+		
 		return '<a href=' . $link . '>' . $text . '</a>';
 	}
 	
