@@ -60,15 +60,12 @@ class htmlTags {
 		$id = pageBuild::getParam('id');
 		$form  = htmlTags::heading(ucwords($table));
 		
-		$form .= '<form action="index.php?';
-		$form .= 'page=' . $operation . '&table=' . $table;
-		if ($id != NULL)
-			$form .= '&id=' . $id;
-		$form .= '" method="post" enctype="multipart/form-data">';
-		
-		$form .= ($table == 'accounts') ?
-			htmlTags::accountFormInputs($data) :
-			htmlTags::todoFormInputs($data);
+		$form .= htmlTags::formAction($table, $operation, $id);
+		if ($operation != 'remove') {
+			$form .= ($table == 'accounts') ?
+				htmlTags::accountFormInputs($data) :
+				htmlTags::todoFormInputs($data);
+		}
 		
 		$form .= '<input type="submit" value="'. $operation .
 				'" name="submit">';
@@ -77,9 +74,18 @@ class htmlTags {
 		return $form;
 	}
 	
+	public static function formAction($table, $operation, $id) {
+		$action = '<form action="index.php?';
+		$action .= 'page=' . $operation . '&table=' . $table;
+		if ($id != NULL)
+			$action .= '&id=' . $id;
+		$action .= '" method="post" enctype="multipart/form-data">';
+		
+		return $action;
+	}
+	
 	public static function formInput($name, $val = NULL, $type = 'text') {
 		// echo '--- ' . $val . ' ---' . htmlTags::lineBreak();
-		
 		$input = '<input type="' . $type . '" ' .
 					 'name="' . $name . '" ' .
 					 'id="'   . $name . '" ' . 

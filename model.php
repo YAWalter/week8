@@ -66,12 +66,16 @@ abstract class model {
 	   return $sql;
     }
 	
-    public function delete() {
-	   $sql = 'DELETE FROM ' . $tablename . ' WHERE id=' . $this->id;
+    public function delete($tableName, $id) {
+	    
+	   $sql = 'DELETE FROM ' . $tableName . 's WHERE id=' . $this->id;
 	   
-	   echo $sql . htmlTags::lineBreak;
+	   $db = dbConn::getConnection();
+        $statement = $db->prepare($sql);
+        $statement->execute();
+	   
+	   echo $sql . htmlTags::lineBreak();
         echo 'I just deleted record' . $this->id;
-	   return $sql;
     }
 }
 

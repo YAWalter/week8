@@ -36,8 +36,8 @@ class pageBuild extends page {
 	}
 	
 	//is this necessary?
-	public static function redirect($page = 'homepage') {
-		return 'Location: index.php?page=' . $page;
+	public static function redirect($page = 'read') {
+		return 'Location: index.php?page=' . $page . '&table=accounts';
 	}
 	
 	public static function pageEnder() {

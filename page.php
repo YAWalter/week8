@@ -25,12 +25,13 @@ abstract class page {
 // index.php?page=homepage
 class homepage extends page {
 	public function get() {
-		// something about the available tables
+		// print error message, because you should be gone by now...
+		if ($table == NULL)
+			header(pageBuild::redirect());
 		$this->html .= htmlTags::heading('WHY ARE YOU HERE?!');
 	}
 	
 	public function post() {
-		// something about whatever was just added
 		// print error message, because you should be gone by now...
 		$this->html .= htmlTags::heading('WHY ARE YOU HERE?!');
 	}
@@ -132,16 +133,29 @@ class remove extends page {
 		$table = pageBuild::getParam('table');
 		$id = pageBuild::getParam('id');
 		
-		// if no $id specified, findAll();
+		// if no $id specified, go home;
 		if ($id == NULL) {
-			echo htmlTags::heading('Find all ' . $table . ':');
-			$records = $table::findAll();
+			header(pageBuild::redirect());
 		} else {
-			echo htmlTags::heading('Find id '. $id . ' from ' . $table . ':');
-			$records = $table::findOne($id);
-		}		
+			$this->html .= htmlTags::heading('Find id '. $id . ' from ' . $table . ':');
+			$record = $table::findOne($id);
+			$this->html .= htmlTags::preObj($record);
+			
+			// form for delete
+			$this->html .= htmlTags::formBuild($table, get_class(), $record);
+		}
+	}
+	
+	public function post() {
+		//method for updating one record
+		$id = pageBuild::getParam('id');
+		$table = pageBuild::getParam('table');
+		$table = rtrim($table, 's');
+		$record = $table::create();
 		
-		echo htmlTags::preObj($records);
+		$record->delete($table, $id);
+		
+		$record->save();
 	}
 
 }
