@@ -122,7 +122,7 @@ class update extends page {
 		
 		$record->save();
 
-		echo htmlTags::preObj($record);
+		$this->html .= htmlTags::preObj($record);
 	}
 }
 
@@ -150,12 +150,13 @@ class remove extends page {
 		//method for updating one record
 		$id = pageBuild::getParam('id');
 		$table = pageBuild::getParam('table');
-		$table = rtrim($table, 's');
-		$record = $table::create();
+		//$table = rtrim($table, 's');
+		$record = $table::findOne($id);
 		
-		$record->delete($table, $id);
+		$record->delete();
 		
-		$record->save();
+		//$record->save();
+		$this->html .= htmlTags::preObj($record);
 	}
 
 }

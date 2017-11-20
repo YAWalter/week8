@@ -109,8 +109,7 @@ class htmlTags {
 			htmlTags::formInput('phone', $data->phone) . 
 			htmlTags::lineBreak();
 		$inputs .= 'BIRTHDAY: ' . 
-			htmlTags::formInput('birthday', $data->birthday, 'datetime') .
-			htmlTags::lineBreak();
+			htmlTags::formInput('birthday', $data->birthday, 'datetime') . htmlTags::lineBreak();
 		$inputs .= 'GENDER: ' . 
 			htmlTags::formInput('gender', $data->gender) .
 			htmlTags::lineBreak();

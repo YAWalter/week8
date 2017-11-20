@@ -16,9 +16,6 @@ abstract class model {
 	   $valueString = implode(',', $values);
 	   
 	   echo htmlTags::preObj($this);
-	   echo $tableName . 'CHECK' . htmlTags::lineBreak();
-	   echo $columnString . htmlTags::lineBreak();
-	   echo $valueString . htmlTags::lineBreak() . htmlTags::lineBreak();
 	   
         if ($this->id == '') {
             $sql = $this->insert($tableName, $columnString, $valueString);
@@ -27,16 +24,24 @@ abstract class model {
         }
         $db = dbConn::getConnection();
         $statement = $db->prepare($sql);
+	   echo $sql . htmlTags::lineBreak();
         $statement->execute();
        
         echo 'I just saved record: ' . $this->id;
     }
 	
     private function insert($tableName, $columnString, $valueString) {
-        $sql = 'INSERT INTO ' . $tableName . 
-			's (' . $columnString . ') VALUES (' . $valueString. ')';
+        $values = explode(',',$valueString);
+	   $valStr = '';
+	   foreach ($values as $i) {
+		   $valStr .= '\'' . $i . '\',';
+	   }
+	   $valStr = rtrim($valStr, ',');
+	   
+	   $sql = 'INSERT INTO ' . $tableName . 
+			's (' . $columnString . ') VALUES (' . $valStr. ')';
         
-	   //echo $sql . htmlTags::lineBreak();
+	   echo $sql . htmlTags::lineBreak();
 	   return $sql;
     }
 	
@@ -46,16 +51,12 @@ abstract class model {
 	   $columns = array_flip($array);
 	   array_pop($columns);
 	   
-	   $count = count($columns);
 	   $set = '';
-	   $counter = 0;
-	   
 	   foreach ($columns as $val=>$field) {
-		   $set .= $field . '=\'' . $val . '\'';
-		   if ($counter < $count-1)
-			   $set .= ',';
-		   $counter++;
+		   $set .= $field . '=\'' . $val . '\',';
 	   }
+	   
+	   $set = rtrim($set, ',');
 	   
 	   $sql = 'UPDATE ' . $tableName .
 			's SET ' . $set .
@@ -66,9 +67,9 @@ abstract class model {
 	   return $sql;
     }
 	
-    public function delete($tableName, $id) {
-	    
-	   $sql = 'DELETE FROM ' . $tableName . 's WHERE id=' . $this->id;
+    public function delete() {
+	   $tableName = pageBuild::getParam('table');
+	   $sql = 'DELETE FROM ' . $tableName . ' WHERE id=' . $this->id;
 	   
 	   $db = dbConn::getConnection();
         $statement = $db->prepare($sql);
