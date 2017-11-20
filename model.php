@@ -23,7 +23,7 @@ abstract class model {
         if ($this->id == '') {
             $sql = $this->insert($tableName, $columnString, $valueString);
         } else {
-            $sql = $this->update();
+            $sql = $this->update($tableName, $columnString, $valueString);
         }
         $db = dbConn::getConnection();
         $statement = $db->prepare($sql);
@@ -36,16 +36,32 @@ abstract class model {
         $sql = 'INSERT INTO ' . $tableName . 
 			's (' . $columnString . ') VALUES (' . $valueString. ')';
         
-	   echo $sql . htmlTags::lineBreak();
+	   //echo $sql . htmlTags::lineBreak();
 	   return $sql;
     }
 	
-    private function update() {
-        $sql = 'UPDATE ' . $tableName .
-			'SET ' . $columnString . '=' . $valueString .
-			'WHERE id=' . $this->id;
+    private function update($tableName, $columnString, $valueString) {
+        $array = get_object_vars($this);
 	   
-        echo $sql . htmlTags::lineBreak;
+	   $columns = array_flip($array);
+	   array_pop($columns);
+	   
+	   $count = count($columns);
+	   $set = '';
+	   $counter = 0;
+	   
+	   foreach ($columns as $val=>$field) {
+		   $set .= $field . '=\'' . $val . '\'';
+		   if ($counter < $count-1)
+			   $set .= ',';
+		   $counter++;
+	   }
+	   
+	   $sql = 'UPDATE ' . $tableName .
+			's SET ' . $set .
+			' WHERE id=' . $this->id;
+	   
+        echo $sql . htmlTags::lineBreak();
         echo 'I just updated record' . $this->id;
 	   return $sql;
     }

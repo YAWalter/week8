@@ -53,16 +53,11 @@ class create extends page {
 		
 		$record = $table::create();
 
-		$record->email = $_POST['email'];
-		$record->fname = $_POST['fname'];
-		$record->lname = $_POST['lname'];
-		$record->phone = $_POST['phone'];
-		$record->birthday = $_POST['birthday'];
-		$record->gender = $_POST['gender'];
-		$record->password = $_POST['password'];
+		if ($table == 'accounts')
+			pageSave::saveAccounts($record);
+		if ($table == 'todos')
+			pageSave::saveTodos($record);
 		
-		//$record->message = 'some task';
-		//$record->isdone = 0;
 		$record->save();
 		echo htmlTags::preObj($record);
 	}
@@ -86,11 +81,6 @@ class read extends page {
 		}		
 		
 		$this->html .= htmlTags::preObj($records);
-	}
-	
-	// is this where Updates land?
-	public function post() {
-		echo '';
 	}
 }
 
@@ -118,6 +108,20 @@ class update extends page {
 
 	public function post() {
 		//method for updating one record
+		$id = pageBuild::getParam('id');
+		$table = pageBuild::getParam('table');
+		
+		$record = $table::create();
+
+		$record->id = $id;
+		if ($table == 'accounts')
+			pageSave::saveAccounts($record);
+		if ($table == 'todos')
+			pageSave::saveTodos($record);
+		
+		$record->save();
+
+		echo htmlTags::preObj($record);
 	}
 }
 

@@ -103,7 +103,7 @@ class htmlTags {
 			htmlTags::formInput('phone', $data->phone) . 
 			htmlTags::lineBreak();
 		$inputs .= 'BIRTHDAY: ' . 
-			htmlTags::formInput('birthday', $data->birthday, 'date') .
+			htmlTags::formInput('birthday', $data->birthday, 'datetime') .
 			htmlTags::lineBreak();
 		$inputs .= 'GENDER: ' . 
 			htmlTags::formInput('gender', $data->gender) .
@@ -115,18 +115,25 @@ class htmlTags {
 		return $inputs;
 	}
 	
-	public static function todoFormInputs() {
+	public static function todoFormInputs($data) {
 		// all 'todo' form inputs
-		$inputs  = 'OWNER EMAIL: ' . htmlTags::formInput('owneremail') 
-			. htmlTags::lineBreak();
-		$inputs .= 'OWNER ID: ' . htmlTags::formInput('ownerid') .
+		$inputs  = 'OWNER EMAIL: ' . 
+			htmlTags::formInput('owneremail', $data->owneremail) .
 			htmlTags::lineBreak();
-		$inputs .= 'CREATED DATE: ' . htmlTags::formInput('createddate', 'date') . htmlTags::lineBreak();
-		$inputs .= 'DUE DATE: ' . htmlTags::formInput('duedate', $data, 'date') 
-			. htmlTags::lineBreak();
-		$inputs .= 'MESSAGE: ' . htmlTags::formInput('message') .
+		$inputs .= 'OWNER ID: ' . 
+			htmlTags::formInput('ownerid', $data->ownerid) .
 			htmlTags::lineBreak();
-		$inputs .= 'IS DONE: ' . htmlTags::formInput('isdone') . 
+		$inputs .= 'CREATED DATE: ' . 
+			htmlTags::formInput('createddate', $data->createddate, 'datetime') . 
+			htmlTags::lineBreak();
+		$inputs .= 'DUE DATE: ' . 
+			htmlTags::formInput('duedate', $data->duedate, 'datetime') .
+			htmlTags::lineBreak();
+		$inputs .= 'MESSAGE: ' . 
+			htmlTags::formInput('message', $data->message) .
+			htmlTags::lineBreak();
+		$inputs .= 'IS DONE: ' . 
+			htmlTags::formInput('isdone', $data->isdone) . 
 			htmlTags::lineBreak();
 		
 		return $inputs;
