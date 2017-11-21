@@ -62,11 +62,18 @@ class htmlTags {
 		$form  = htmlTags::heading(ucwords($table));
 		
 		$form .= htmlTags::formAction($table, $operation, $id);
+		
 		if ($operation != 'remove') {
 			$form .= ($table == 'accounts') ?
 				htmlTags::accountFormInputs($data) :
 				htmlTags::todoFormInputs($data);
-		}
+		} 
+		
+		if ($operation == 'update') {
+			$form .= '<input type="submit" value="remove" 
+				formaction="/index.php?page=remove&table=' . $table .
+				'&id=' . $id . '.php" name="remove">';
+		}			
 		
 		$form .= '<input type="submit" value="'. $operation .
 				'" name="submit">';
